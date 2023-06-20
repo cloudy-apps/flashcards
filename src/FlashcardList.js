@@ -11,7 +11,7 @@ const getList = () =>
 function FlashcardList() {
   const [flashcards, setFlashCards] = useState(getList());
   const [currentCard, setCurrentCard] = useState(0);
-  const [flip, setFlip] = useState(true);
+  const [flip, setFlip] = useState(false);
 
   const resetList = () => {
     setFlip(false);
@@ -59,14 +59,14 @@ function FlashcardList() {
       >
         <div
           className={`text-gray-900 font-bold card absolute z-1 w-full top-0 left-0 right-0 bottom-0 justify-center items-center flex text-center ${
-            flip ? "" : "flip"
+            flip ? "flip" : ""
           }`}
         >
           <span>{flashcards[currentCard].front}</span>
         </div>
         <div
           className={`text-gray-900 font-bold card absolute z-2 w-full top-0 left-0 right-0 bottom-0 justify-center items-center flex text-center ${
-            flip ? "flip" : ""
+            flip ? "" : "flip"
           }`}
         >
           <span>{flashcards[currentCard].back}</span>
