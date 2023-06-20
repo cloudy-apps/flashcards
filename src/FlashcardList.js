@@ -52,7 +52,7 @@ function FlashcardList() {
   });
 
   return (
-    <div className="flex flex-col h-screen justify-center bg-gray-200">
+    <div className="flex flex-col h-screen justify-center">
       <div
         onClick={() => setFlip(!flip)}
         className={`cards relative w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden text-center`}
@@ -75,13 +75,13 @@ function FlashcardList() {
 
       <div className="text-center mt-4">
         <button
-          className="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2"
+          className="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2 mr-4"
           onClick={() => resetList()}
         >
           <span className="material-icons">shuffle</span>
         </button>
         <button
-          className="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2"
+          className="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2 mr-4"
           onClick={() => prevCard()}
         >
           <span className="material-icons">undo</span>
