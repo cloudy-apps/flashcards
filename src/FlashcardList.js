@@ -13,13 +13,21 @@ function FlashcardList() {
   const [currentCard, setCurrentCard] = useState(0);
   const [flip, setFlip] = useState(true);
 
-  const resetList = () => setFlashCards(getList());
-  const nextCard = () => setCurrentCard((currentCard + 1) % flashcards.length);
-  const prevCard = () =>
+  const resetList = () => {
+    setFlip(false);
+    setFlashCards(getList());
+  };
+  const nextCard = () => {
+    setFlip(false);
+    setCurrentCard((currentCard + 1) % flashcards.length);
+  };
+  const prevCard = () => {
+    setFlip(false);
     setCurrentCard(
       (currentCard > 0 ? currentCard - 1 : flashcards.length) %
         flashcards.length
     );
+  };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
