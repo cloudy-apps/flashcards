@@ -44,7 +44,7 @@
 
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from "vue";
-import { getRandomPairs } from "./dutch-words.js";
+import { getRandomPairs } from "./dutch-words";
 
 const useState = (value) => {
   const r = ref(value);
@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
   opacity: 1;
   transition: opacity 0.25s linear;
   /* animation-fill-mode: forwards; */
-  /* backface-visibility: hidden; */
+  backface-visibility: hidden;
 }
 
 .flip {
