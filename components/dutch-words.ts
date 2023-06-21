@@ -1,4 +1,4 @@
-const wordPairs = [
+export const wordPairs = [
   { front: "de", back: "the" },
   { front: "zijn", back: "to be" },
   { front: "en", back: "and" },
@@ -2001,4 +2001,8 @@ const wordPairs = [
   { front: "werkelijk", back: "actual" },
 ];
 
-export { wordPairs };
+export const getList = (size = 50) =>
+  wordPairs
+    .slice()
+    .sort(() => (Math.random() > Math.random() ? 1 : -1))
+    .slice(0, size);
