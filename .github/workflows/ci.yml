@@ -11,7 +11,6 @@ jobs:
     with:
       name: cloudy-apps/flashcards
       baseImage: cloud-cli/node:latest
-      defaultBranch: main
-      type: node
+      type: vite
       withSha: false
       withTag: true
