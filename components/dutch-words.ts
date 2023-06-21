@@ -2001,7 +2001,7 @@ export const wordPairs = [
   { front: "werkelijk", back: "actual" },
 ];
 
-export const getList = (size = 50) =>
+export const getRandomPairs = (size = 50) =>
   wordPairs
     .slice()
     .sort(() => (Math.random() > Math.random() ? 1 : -1))
