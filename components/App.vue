@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { onBeforeUnmount, onMounted, ref, unref } from "vue";
 import { getRandomPairs } from "./dutch-words";
 
 const useState = (value) => {
@@ -66,13 +66,13 @@ const resetList = () => {
 
 const nextCard = () => {
   setFlip(false);
-  setCurrentCard((currentCard + 1) % flashcards.length);
+  setCurrentCard((unref(currentCard) + 1) % unref(flashcards).length);
 };
 
 const prevCard = () => {
   setFlip(false);
   setCurrentCard(
-    (currentCard > 0 ? currentCard - 1 : flashcards.length) % flashcards.length
+    (unref(currentCard) > 0 ? unref(currentCard) - 1 : unref(flashcards).length) % unref(flashcards).length
   );
 };
 
