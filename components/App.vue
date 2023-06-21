@@ -1,19 +1,22 @@
 <template>
-  <div class="flex flex-col h-screen w-screen justify-center app">
+  <div class="flex flex-col h-screen w-screen justify-center app px-4">
     <div
       @click="setFlip(!flip)"
       class="cards relative w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden text-center"
     >
       <div
         :class="[
-          'text-gray-900 font-bold card absolute z-1 w-full top-0 left-0 right-0 bottom-0 justify-center items-center flex text-center',
+          'text-gray-900 font-bold card absolute z-1 inset-0 justify-center items-center flex text-center transition-all',
           flip ? 'flip' : '',
         ]"
       >
         <span>{{ flashcards[currentCard].front }}</span>
       </div>
       <div
-        class="['text-gray-900 font-bold card absolute z-2 w-full top-0 left-0 right-0 bottom-0 justify-center items-center flex text-center', flip ? '' : 'flip']"
+        :class="[
+          'text-gray-900 font-bold card absolute z-2 inset-0 justify-center items-center flex text-center transition-all',
+          flip ? '' : 'flip',
+        ]"
       >
         <span>{{ flashcards[currentCard].back }}</span>
       </div>
@@ -105,7 +108,6 @@ onBeforeUnmount(() => {
   font-size: 2rem;
   opacity: 1;
   transition: opacity 0.25s linear;
-  /* animation-fill-mode: forwards; */
   backface-visibility: hidden;
 }
 
