@@ -6,7 +6,7 @@
     >
       <div
         :class="[
-          'text-gray-900 font-bold card absolute z-1 inset-0 justify-center items-center flex text-center transition-all',
+          'text-gray-900 font-bold card absolute z-1 inset-0 justify-center items-center flex text-center',
           flip ? 'flip' : '',
         ]"
       >
@@ -14,7 +14,7 @@
       </div>
       <div
         :class="[
-          'text-gray-900 font-bold card absolute z-2 inset-0 justify-center items-center flex text-center transition-all',
+          'text-gray-900 font-bold card absolute z-2 inset-0 justify-center items-center flex text-center',
           flip ? '' : 'flip',
         ]"
       >
