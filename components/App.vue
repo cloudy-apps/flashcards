@@ -128,6 +128,10 @@ const handleKeyDown = (event) => {
   if (event.key === "s" || event.key === "ArrowDown") {
     flip();
   }
+
+  if (event.key === "a" || event.key === "ArrowUp") {
+    unflip();
+  }
 };
 
 onMounted(async () => {
