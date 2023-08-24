@@ -1,6 +1,6 @@
 {
-  "short_name": "Flash Cards App",
-  "name": "Flash Cards App",
+  "short_name": "Flash Cards",
+  "name": "Flash Cards",
   "icons": [
     {
       "src": "/icon.svg",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#e91e63",
   "background_color": "#e91e63"
