@@ -79,14 +79,13 @@ async function flip() {
   flipped = true;
 }
 
-function unflip() {
-  if (card1.value) {
-    card1.value.style.opacity = "1";
-  }
-
-  if (card2.value) {
-    card2.value.style.opacity = "0";
-  }
+async function unflip() {
+  await Promise.all([
+    card1.value?.animate({ opacity: "1" }, { duration: 10, fill: "forwards" })
+      .finished,
+    card2.value?.animate({ opacity: "0" }, { duration: 10, fill: "forwards" })
+      .finished,
+  ]);
 
   flipped = false;
 }
@@ -100,12 +99,12 @@ const resetList = () => {
 };
 
 const nextCard = () => {
-  unflip();
+  await unflip();
   setCurrentCard((unref(currentCard) + 1) % unref(flashcards).length);
 };
 
 const prevCard = () => {
-  unflip();
+  await unflip();
   setCurrentCard(
     (unref(currentCard) > 0
       ? unref(currentCard) - 1
@@ -133,6 +132,8 @@ onMounted(async () => {
 
   if (lang.value) {
     pairs.value = await fetchPairs(lang.value);
+    unflip();
+    resetList();
   }
 });
 
