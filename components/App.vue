@@ -2,13 +2,12 @@
   <div class="flex flex-col h-screen w-screen justify-center app px-4">
     <nav
       v-if="!lang"
-      class="flex items-center justify-center gap-4 p-2 text-xl text-white"
+      class="flex flex-col items-center justify-center gap-4 p-2 text-xl text-white"
     >
-      <h1>Select a language to practice:</h1>
-      <a href="/?lang=fr">French</a>
-      <a href="/?lang=nl">Dutch</a>
-      <a href="/?lang=es">Spanish</a>
-      <a href="/?lang=it">Italian</a>
+      <a href="/?lang=fr" class="p-2">French</a>
+      <a href="/?lang=nl" class="p-2">Dutch</a>
+      <a href="/?lang=es" class="p-2">Spanish</a>
+      <a href="/?lang=it" class="p-2">Italian</a>
     </nav>
     <div
       v-if="lang"
