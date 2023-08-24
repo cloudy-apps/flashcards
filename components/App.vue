@@ -6,7 +6,7 @@
       <a href="/?lang=es">ES</a>
     </nav>
     <div
-      v-if="lang"
+      v-if="lang && flashcards.length"
       @click="flip()"
       class="cards relative w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden text-center"
     >
@@ -129,7 +129,7 @@ const handleKeyDown = (event) => {
 
 onMounted(async () => {
   window.addEventListener("keydown", handleKeyDown);
-  lang.value = new URL(location.href).searchParams.get("lang") || '';
+  lang.value = new URL(location.href).searchParams.get("lang") || "";
 
   if (lang.value) {
     pairs.value = await fetchPairs(lang.value);
