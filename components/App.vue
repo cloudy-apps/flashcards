@@ -1,28 +1,30 @@
 <template>
   <div class="flex flex-col h-screen w-screen justify-center app px-4">
+    <nav v-if="!lang" class="flex items-center justify-center gap-4 p-2">
+      <a href="/?lang=fr">FR</a>
+      <a href="/?lang=nl">NL</a>
+      <a href="/?lang=es">ES</a>
+    </nav>
     <div
-      @click="setFlip(!flip)"
+      v-if="lang"
+      @click="flip()"
       class="cards relative w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden text-center"
     >
       <div
-        :class="[
-          'text-gray-900 font-bold card absolute z-1 inset-0 justify-center items-center flex text-center',
-          flip ? 'flip' : '',
-        ]"
+        class="text-gray-900 font-bold card absolute z-1 inset-0 justify-center items-center flex text-center"
+        ref="card1"
       >
         <span>{{ flashcards[currentCard].front }}</span>
       </div>
       <div
-        :class="[
-          'text-gray-900 font-bold card absolute z-2 inset-0 justify-center items-center flex text-center',
-          flip ? '' : 'flip',
-        ]"
+        class="text-gray-900 font-bold card absolute z-1 inset-0 justify-center items-center flex text-center"
+        ref="card2"
       >
         <span>{{ flashcards[currentCard].back }}</span>
       </div>
     </div>
 
-    <div class="text-center mt-4">
+    <div v-if="lang" class="text-center mt-4">
       <button
         class="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2 mr-4"
         @click="resetList()"
@@ -45,34 +47,69 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref, unref } from "vue";
-import { getRandomPairs } from "./dutch-words";
+import { fetchPairs, getRandomPairs, Pair } from "./word-pairs";
 
-const useState = (value) => {
-  const r = ref(value);
-  const s = (v) => (r.value = v);
-  return [r, s];
+const card1 = ref<HTMLDivElement | null>(null);
+const card2 = ref<HTMLDivElement | null>(null);
+const pairs = ref<Pair[]>([]);
+const lang = ref("");
+
+let flipped = false;
+
+const useState = <T = any>(value: T) => {
+  const r = ref<T>(value);
+  const s = (v: T) => (r.value = v as any);
+  return [r, s] as const;
 };
 
-const [flashcards, setFlashCards] = useState(getRandomPairs());
+async function flip() {
+  if (flipped) {
+    return unflip();
+  }
+
+  await Promise.all([
+    card1.value?.animate({ opacity: "0" }, { duration: 200, fill: "forwards" })
+      .finished,
+    card2.value?.animate({ opacity: "1" }, { duration: 200, fill: "forwards" })
+      .finished,
+  ]);
+
+  flipped = true;
+}
+
+function unflip() {
+  if (card1.value) {
+    card1.value.style.opacity = "1";
+  }
+
+  if (card2.value) {
+    card2.value.style.opacity = "0";
+  }
+
+  flipped = false;
+}
+
+const [flashcards, setFlashCards] = useState<Pair[]>([]);
 const [currentCard, setCurrentCard] = useState(0);
-const [flip, setFlip] = useState(false);
 
 const resetList = () => {
-  setFlip(false);
-  setFlashCards(getRandomPairs());
+  unflip();
+  setFlashCards(getRandomPairs(pairs.value));
 };
 
 const nextCard = () => {
-  setFlip(false);
+  unflip();
   setCurrentCard((unref(currentCard) + 1) % unref(flashcards).length);
 };
 
 const prevCard = () => {
-  setFlip(false);
+  unflip();
   setCurrentCard(
-    (unref(currentCard) > 0 ? unref(currentCard) - 1 : unref(flashcards).length) % unref(flashcards).length
+    (unref(currentCard) > 0
+      ? unref(currentCard) - 1
+      : unref(flashcards).length) % unref(flashcards).length
   );
 };
 
@@ -86,12 +123,17 @@ const handleKeyDown = (event) => {
   }
 
   if (event.key === "s" || event.key === "ArrowDown") {
-    setFlip(!flip.value);
+    flip();
   }
 };
 
-onMounted(() => {
+onMounted(async () => {
   window.addEventListener("keydown", handleKeyDown);
+  lang.value = new URL(location.href).searchParams.get("lang");
+
+  if (lang.value) {
+    pairs.value = await fetchPairs(lang.value);
+  }
 });
 
 onBeforeUnmount(() => {
@@ -111,9 +153,6 @@ onBeforeUnmount(() => {
   backface-visibility: hidden;
 }
 
-.flip {
-  opacity: 0;
-}
 .app {
   background-color: #e91e63;
 }
