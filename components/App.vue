@@ -27,9 +27,12 @@
     <div v-if="lang" class="text-center mt-4">
       <button
         class="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2 mr-4"
+        :class="loading && 'animate-spin'"
         @click="resetList()"
       >
-        <span class="material-icons">shuffle</span>
+        <span class="material-icons">{{
+          loading ? "refresh" : "shuffle"
+        }}</span>
       </button>
       <button
         class="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2 mr-4"
@@ -54,6 +57,7 @@ import { fetchPairs, getRandomPairs, Pair } from "./word-pairs";
 const card1 = ref<HTMLDivElement | null>(null);
 const card2 = ref<HTMLDivElement | null>(null);
 const pairs = ref<Pair[]>([]);
+const loading = ref(false);
 const lang = ref("");
 
 let flipped = false;
@@ -93,9 +97,9 @@ async function unflip() {
 const [flashcards, setFlashCards] = useState<Pair[]>([]);
 const [currentCard, setCurrentCard] = useState(0);
 
-const resetList = () => {
-  unflip();
+const resetList = async () => {
   setFlashCards(getRandomPairs(pairs.value));
+  await unflip();
 };
 
 const nextCard = async () => {
@@ -131,9 +135,10 @@ onMounted(async () => {
   lang.value = new URL(location.href).searchParams.get("lang") || "";
 
   if (lang.value) {
+    loading.value = true;
     pairs.value = await fetchPairs(lang.value);
-    unflip();
-    resetList();
+    await resetList();
+    loading.value = false;
   }
 });
 
