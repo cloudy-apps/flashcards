@@ -129,7 +129,7 @@ const handleKeyDown = (event) => {
 
 onMounted(async () => {
   window.addEventListener("keydown", handleKeyDown);
-  lang.value = new URL(location.href).searchParams.get("lang");
+  lang.value = new URL(location.href).searchParams.get("lang") || '';
 
   if (lang.value) {
     pairs.value = await fetchPairs(lang.value);
