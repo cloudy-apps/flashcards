@@ -98,12 +98,12 @@ const resetList = () => {
   setFlashCards(getRandomPairs(pairs.value));
 };
 
-const nextCard = () => {
+const nextCard = async () => {
   await unflip();
   setCurrentCard((unref(currentCard) + 1) % unref(flashcards).length);
 };
 
-const prevCard = () => {
+const prevCard = async () => {
   await unflip();
   setCurrentCard(
     (unref(currentCard) > 0
