@@ -6,7 +6,7 @@
       <a href="/?lang=es">ES</a>
     </nav>
     <div
-      v-if="lang && flashcards.length"
+      v-if="lang"
       @click="flip()"
       class="cards relative w-full max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden text-center"
     >
@@ -14,13 +14,13 @@
         class="text-gray-900 font-bold card absolute z-1 inset-0 justify-center items-center flex text-center"
         ref="card1"
       >
-        <span>{{ flashcards[currentCard].front }}</span>
+        <span>{{ flashcards.length && flashcards[currentCard].front }}</span>
       </div>
       <div
         class="text-gray-900 font-bold card absolute z-1 inset-0 justify-center items-center flex text-center"
         ref="card2"
       >
-        <span>{{ flashcards[currentCard].back }}</span>
+        <span>{{ flashcards.length && flashcards[currentCard].back }}</span>
       </div>
     </div>
 
