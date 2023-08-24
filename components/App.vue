@@ -8,6 +8,7 @@
       <a href="/?lang=nl" class="p-2">Dutch</a>
       <a href="/?lang=es" class="p-2">Spanish</a>
       <a href="/?lang=it" class="p-2">Italian</a>
+      <a href="/?lang=tr" class="p-2">Turkish</a>
     </nav>
     <div
       v-if="lang"
@@ -28,9 +29,9 @@
       </div>
     </div>
 
-    <div v-if="lang" class="text-center mt-4">
+    <div v-if="lang" class="pt-8 flex justify-center items-center gap-4">
       <button
-        class="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2 mr-4"
+        class="bg-white shadow-lg rounded-full p-4 leading-4"
         @click="resetList()"
       >
         <span class="material-icons" :class="loading && 'animate-spin'">{{
@@ -38,16 +39,24 @@
         }}</span>
       </button>
       <button
-        class="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2 mr-4"
+        class="bg-white shadow-lg rounded-full p-4 leading-4"
         @click="prevCard()"
       >
         <span class="material-icons">undo</span>
       </button>
       <button
-        class="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2"
+        class="bg-white shadow-lg rounded-full p-4 leading-4"
         @click="nextCard()"
       >
         <span class="material-icons">redo</span>
+      </button>
+
+      <button
+        class="bg-white shadow-lg rounded-full p-4 leading-4"
+        v-if="canSpeak"
+        @click="speak()"
+      >
+        <span class="material-icons">volume_mute</span>
       </button>
     </div>
   </div>
@@ -61,6 +70,7 @@ const card1 = ref<HTMLDivElement | null>(null);
 const card2 = ref<HTMLDivElement | null>(null);
 const pairs = ref<Pair[]>([]);
 const loading = ref(false);
+const canSpeak = ref(!!window.speechSynthesis);
 const lang = ref("");
 
 let flipped = false;
@@ -104,6 +114,10 @@ const resetList = async () => {
   setFlashCards(getRandomPairs(pairs.value));
   await unflip();
 };
+
+const speak = async() {
+  speechSynthesis.speak(Object.assign(new SpeechSynthesisUtterance(flashcards.value[currentCard.value].front), { lang: lang.value }))
+}
 
 const nextCard = async () => {
   await unflip();
