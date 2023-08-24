@@ -2,7 +2,7 @@ import generateWordPairs from "https://aifn.run/fn/ed2b7b1d-77c4-49dc-91a9-27e9f
 
 export type Pair = { front: string; back: string };
 
-const knownLanguages = ["fr", "es", "nl"];
+const knownLanguages = ["fr", "es", "nl", "it"];
 export const fetchPairs = async (language: string): Promise<Pair[]> => {
   let source: Array<[string, string]>;
 

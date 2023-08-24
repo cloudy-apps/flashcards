@@ -32,10 +32,9 @@
     <div v-if="lang" class="text-center mt-4">
       <button
         class="bg-white border border-gray-400 shadow rounded-full w-10 h-10 p-2 mr-4"
-        :class="loading && 'animate-spin'"
         @click="resetList()"
       >
-        <span class="material-icons">{{
+        <span class="material-icons" :class="loading && 'animate-spin'">{{
           loading ? "refresh" : "shuffle"
         }}</span>
       </button>
