@@ -115,7 +115,7 @@ const resetList = async () => {
   await unflip();
 };
 
-const speak = async() {
+const speak = async() => {
   speechSynthesis.speak(Object.assign(new SpeechSynthesisUtterance(flashcards.value[currentCard.value].front), { lang: lang.value }))
 }
 
